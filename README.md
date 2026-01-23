@@ -173,6 +173,28 @@ MONGO_URI=mongodb://localhost:27017/appointments
 JWT_SECRET=change_me
 ```
 
+## 8.1) API Smoke Test (PowerShell + curl.exe)
+
+Once your backend is running on `http://localhost:5000`, you can run an end-to-end API smoke test that:
+
+- registers a student + lecturer (unique emails)
+- logs in and captures JWTs
+- creates a lecturer time slot
+- books an appointment as the student
+- approves and completes the appointment as the lecturer
+
+Run:
+
+```powershell
+./scripts/smoke-test.ps1
+```
+
+Optional:
+
+```powershell
+./scripts/smoke-test.ps1 -BaseUrl "http://localhost:5000/api" -Cleanup
+```
+
 ## 9) Why This Is a Good Academic Project
 
 - Real-world use case
