@@ -10,3 +10,4 @@ export { default as Avatar } from './Avatar';
 export { default as PageContainer } from './PageContainer';
 export { default as PageHeader } from './PageHeader';
 export { default as SkeletonLoader } from './SkeletonLoader';
+export { default as ThemeToggle } from './ThemeToggle';

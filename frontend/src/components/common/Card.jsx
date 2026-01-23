@@ -17,8 +17,8 @@ const Card = ({
   };
 
   const variantClasses = glass
-    ? 'bg-dark-card/80 backdrop-blur-md border-border-subtle/50'
-    : 'bg-dark-card border-border-subtle/30 shadow-card';
+    ? 'bg-light-card/80 dark:bg-dark-card/80 backdrop-blur-md border-border-subtle-light/50 dark:border-border-subtle/50'
+    : 'bg-light-card dark:bg-dark-card border-border-subtle-light/30 dark:border-border-subtle/30 shadow-card';
 
   const hoverClasses = hover
     ? 'cursor-pointer hover:border-primary-accent/50 hover:shadow-soft hover:-translate-y-0.5'

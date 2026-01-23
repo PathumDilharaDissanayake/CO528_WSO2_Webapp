@@ -4,18 +4,33 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
+        // Dark mode colors
         'dark-bg': '#0B0F19',
         'dark-secondary': '#111827',
         'dark-card': '#1F2937',
+        // Light mode colors
+        'light-bg': '#FFFFFF',
+        'light-secondary': '#F3F4F6',
+        'light-card': '#E5E7EB',
+        // Shared colors
         'primary-accent': '#2563EB',
         'primary-accent-hover': '#1D4ED8',
+        // Text colors (dark mode)
         'text-primary': '#FFFFFF',
         'text-secondary': '#9CA3AF',
         'text-muted': '#6B7280',
+        // Text colors (light mode)
+        'text-primary-light': '#111827',
+        'text-secondary-light': '#4B5563',
+        'text-muted-light': '#6B7280',
+        // Border colors
         'border-subtle': '#374151',
+        'border-subtle-light': '#D1D5DB',
+        // Status colors
         'success': '#10B981',
         'warning': '#F59E0B',
         'danger': '#EF4444',

@@ -76,7 +76,7 @@ const StudentAppointments = () => {
 
       {/* Results count */}
       {!loading && (
-        <p className="text-sm text-text-muted mb-4">
+        <p className="text-sm text-text-muted-light dark:text-text-muted mb-4">
           {filteredAppointments.length} appointment{filteredAppointments.length !== 1 ? 's' : ''} found
         </p>
       )}

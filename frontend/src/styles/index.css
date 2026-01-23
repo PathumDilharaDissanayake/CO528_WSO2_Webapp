@@ -16,7 +16,7 @@
   }
 
   body {
-    @apply bg-dark-bg text-text-primary font-sans min-h-screen;
+    @apply bg-light-bg dark:bg-dark-bg text-text-primary-light dark:text-text-primary font-sans min-h-screen transition-colors duration-300;
   }
 
   ::-webkit-scrollbar {
@@ -25,21 +25,32 @@
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-dark-secondary rounded-full;
+    @apply bg-light-secondary dark:bg-dark-secondary rounded-full;
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-border-subtle rounded-full;
+    @apply bg-border-subtle-light dark:bg-border-subtle rounded-full;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-text-muted;
+    @apply bg-text-muted-light dark:bg-text-muted;
   }
 
+  /* Light mode autofill */
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus,
   input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #F3F4F6 inset !important;
+    -webkit-text-fill-color: #111827 !important;
+    caret-color: #111827;
+  }
+
+  /* Dark mode autofill */
+  .dark input:-webkit-autofill,
+  .dark input:-webkit-autofill:hover,
+  .dark input:-webkit-autofill:focus,
+  .dark input:-webkit-autofill:active {
     -webkit-box-shadow: 0 0 0 30px #1F2937 inset !important;
     -webkit-text-fill-color: #FFFFFF !important;
     caret-color: #FFFFFF;
@@ -48,11 +59,11 @@
 
 @layer components {
   .glass-effect {
-    @apply bg-dark-card/80 backdrop-blur-md border border-border-subtle/50;
+    @apply bg-light-card/80 dark:bg-dark-card/80 backdrop-blur-md border border-border-subtle-light/50 dark:border-border-subtle/50;
   }
 
   .card {
-    @apply bg-dark-card rounded-2xl border border-border-subtle/30 shadow-card;
+    @apply bg-light-card dark:bg-dark-card rounded-2xl border border-border-subtle-light/30 dark:border-border-subtle/30 shadow-card;
   }
 
   .card-hover {
@@ -64,15 +75,15 @@
            transition-all duration-200 ease-out
            hover:bg-primary-accent-hover hover:shadow-lg hover:shadow-primary-accent/25
            active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed
-           focus:outline-none focus:ring-2 focus:ring-primary-accent/50 focus:ring-offset-2 focus:ring-offset-dark-bg;
+           focus:outline-none focus:ring-2 focus:ring-primary-accent/50 focus:ring-offset-2 focus:ring-offset-light-bg dark:focus:ring-offset-dark-bg;
   }
 
   .btn-secondary {
-    @apply bg-dark-card text-text-primary font-medium py-3 px-6 rounded-xl
-           border border-border-subtle transition-all duration-200 ease-out
-           hover:bg-dark-secondary hover:border-text-muted
+    @apply bg-light-card dark:bg-dark-card text-text-primary-light dark:text-text-primary font-medium py-3 px-6 rounded-xl
+           border border-border-subtle-light dark:border-border-subtle transition-all duration-200 ease-out
+           hover:bg-light-secondary dark:hover:bg-dark-secondary hover:border-text-muted-light dark:hover:border-text-muted
            active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed
-           focus:outline-none focus:ring-2 focus:ring-border-subtle focus:ring-offset-2 focus:ring-offset-dark-bg;
+           focus:outline-none focus:ring-2 focus:ring-border-subtle-light dark:focus:ring-border-subtle focus:ring-offset-2 focus:ring-offset-light-bg dark:focus:ring-offset-dark-bg;
   }
 
   .btn-danger {
@@ -80,7 +91,7 @@
            transition-all duration-200 ease-out
            hover:bg-red-600 hover:shadow-lg hover:shadow-danger/25
            active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed
-           focus:outline-none focus:ring-2 focus:ring-danger/50 focus:ring-offset-2 focus:ring-offset-dark-bg;
+           focus:outline-none focus:ring-2 focus:ring-danger/50 focus:ring-offset-2 focus:ring-offset-light-bg dark:focus:ring-offset-dark-bg;
   }
 
   .btn-success {
@@ -88,32 +99,32 @@
            transition-all duration-200 ease-out
            hover:bg-emerald-600 hover:shadow-lg hover:shadow-success/25
            active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed
-           focus:outline-none focus:ring-2 focus:ring-success/50 focus:ring-offset-2 focus:ring-offset-dark-bg;
+           focus:outline-none focus:ring-2 focus:ring-success/50 focus:ring-offset-2 focus:ring-offset-light-bg dark:focus:ring-offset-dark-bg;
   }
 
   .btn-ghost {
-    @apply text-text-secondary font-medium py-2 px-4 rounded-xl
+    @apply text-text-secondary-light dark:text-text-secondary font-medium py-2 px-4 rounded-xl
            transition-all duration-200 ease-out
-           hover:bg-dark-card hover:text-text-primary
+           hover:bg-light-card dark:hover:bg-dark-card hover:text-text-primary-light dark:hover:text-text-primary
            active:scale-[0.98]
-           focus:outline-none focus:ring-2 focus:ring-border-subtle focus:ring-offset-2 focus:ring-offset-dark-bg;
+           focus:outline-none focus:ring-2 focus:ring-border-subtle-light dark:focus:ring-border-subtle focus:ring-offset-2 focus:ring-offset-light-bg dark:focus:ring-offset-dark-bg;
   }
 
   .btn-icon {
     @apply p-2.5 rounded-xl transition-all duration-200 ease-out
-           hover:bg-dark-card active:scale-95
-           focus:outline-none focus:ring-2 focus:ring-border-subtle;
+           hover:bg-light-card dark:hover:bg-dark-card active:scale-95
+           focus:outline-none focus:ring-2 focus:ring-border-subtle-light dark:focus:ring-border-subtle;
   }
 
   .input-field {
-    @apply w-full bg-dark-secondary text-text-primary placeholder-text-muted
-           py-3.5 px-4 rounded-xl border border-border-subtle/50
+    @apply w-full bg-light-secondary dark:bg-dark-secondary text-text-primary-light dark:text-text-primary placeholder-text-muted-light dark:placeholder-text-muted
+           py-3.5 px-4 rounded-xl border border-border-subtle-light/50 dark:border-border-subtle/50
            transition-all duration-200 ease-out
            focus:outline-none focus:border-primary-accent focus:ring-2 focus:ring-primary-accent/20;
   }
 
   .input-label {
-    @apply block text-sm font-medium text-text-secondary mb-2;
+    @apply block text-sm font-medium text-text-secondary-light dark:text-text-secondary mb-2;
   }
 
   .input-error {
@@ -137,7 +148,7 @@
   }
 
   .badge-cancelled {
-    @apply badge bg-text-muted/20 text-text-muted;
+    @apply badge bg-text-muted/20 text-text-muted-light dark:text-text-muted;
   }
 
   .badge-completed {
@@ -145,7 +156,7 @@
   }
 
   .page-container {
-    @apply min-h-screen bg-dark-bg px-4 py-6 sm:px-6 lg:px-8;
+    @apply min-h-screen bg-light-bg dark:bg-dark-bg px-4 py-6 sm:px-6 lg:px-8 transition-colors duration-300;
   }
 
   .page-header {
@@ -153,23 +164,23 @@
   }
 
   .page-title {
-    @apply text-2xl sm:text-3xl font-bold text-text-primary;
+    @apply text-2xl sm:text-3xl font-bold text-text-primary-light dark:text-text-primary;
   }
 
   .page-subtitle {
-    @apply text-text-secondary mt-1;
+    @apply text-text-secondary-light dark:text-text-secondary mt-1;
   }
 
   .section-title {
-    @apply text-lg font-semibold text-text-primary mb-4;
+    @apply text-lg font-semibold text-text-primary-light dark:text-text-primary mb-4;
   }
 
   .divider {
-    @apply border-t border-border-subtle/50 my-6;
+    @apply border-t border-border-subtle-light/50 dark:border-border-subtle/50 my-6;
   }
 
   .skeleton {
-    @apply animate-pulse bg-dark-secondary rounded-xl;
+    @apply animate-pulse bg-light-secondary dark:bg-dark-secondary rounded-xl;
   }
 
   .empty-state {
@@ -177,15 +188,15 @@
   }
 
   .empty-state-icon {
-    @apply w-16 h-16 text-text-muted mb-4;
+    @apply w-16 h-16 text-text-muted-light dark:text-text-muted mb-4;
   }
 
   .empty-state-title {
-    @apply text-lg font-medium text-text-primary mb-2;
+    @apply text-lg font-medium text-text-primary-light dark:text-text-primary mb-2;
   }
 
   .empty-state-text {
-    @apply text-text-secondary max-w-sm;
+    @apply text-text-secondary-light dark:text-text-secondary max-w-sm;
   }
 }
 

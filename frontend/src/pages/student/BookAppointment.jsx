@@ -123,8 +123,8 @@ const BookAppointment = () => {
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             <Avatar name={lecturer.name} size="xl" />
             <div className="flex-1">
-              <h1 className="text-xl font-bold text-text-primary">{lecturer.name}</h1>
-              <p className="text-text-secondary">{lecturer.email}</p>
+              <h1 className="text-xl font-bold text-text-primary-light dark:text-text-primary">{lecturer.name}</h1>
+              <p className="text-text-secondary-light dark:text-text-secondary">{lecturer.email}</p>
             </div>
           </div>
         </Card>
@@ -158,11 +158,11 @@ const BookAppointment = () => {
             <Card glass className="mt-6 sticky bottom-4">
               <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                 <div className="flex-1">
-                  <p className="text-sm text-text-muted mb-1">Selected Time Slot</p>
-                  <p className="font-semibold text-text-primary">
+                  <p className="text-sm text-text-muted-light dark:text-text-muted mb-1">Selected Time Slot</p>
+                  <p className="font-semibold text-text-primary-light dark:text-text-primary">
                     {dayjs(selectedSlot.date).format('dddd, MMMM D, YYYY')}
                   </p>
-                  <p className="text-text-secondary">
+                  <p className="text-text-secondary-light dark:text-text-secondary">
                     {selectedSlot.startTime} - {selectedSlot.endTime}
                   </p>
                 </div>

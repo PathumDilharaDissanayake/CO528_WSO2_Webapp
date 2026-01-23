@@ -81,15 +81,15 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-dark-bg flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-light-bg dark:bg-dark-bg flex items-center justify-center px-4 py-12 transition-colors duration-300">
       <div className="w-full max-w-md animate-in">
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="w-16 h-16 rounded-2xl bg-primary-accent flex items-center justify-center mx-auto mb-4">
             <HiOutlineCalendarDays className="w-8 h-8 text-white" />
           </div>
-          <h1 className="text-2xl font-bold text-text-primary">Create Account</h1>
-          <p className="text-text-secondary mt-2">Join our appointment booking system</p>
+          <h1 className="text-2xl font-bold text-text-primary-light dark:text-text-primary">Create Account</h1>
+          <p className="text-text-secondary-light dark:text-text-secondary mt-2">Join our appointment booking system</p>
         </div>
 
         {/* Register Form */}
@@ -157,7 +157,7 @@ const Register = () => {
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-text-secondary">
+            <p className="text-text-secondary-light dark:text-text-secondary">
               Already have an account?{' '}
               <Link
                 to="/login"

@@ -50,7 +50,7 @@ const LecturerListPage = () => {
       {/* Search */}
       <div className="mb-6">
         <div className="relative max-w-md">
-          <HiOutlineMagnifyingGlass className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" />
+          <HiOutlineMagnifyingGlass className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted-light dark:text-text-muted" />
           <Input
             type="text"
             placeholder="Search by name or email..."
@@ -63,7 +63,7 @@ const LecturerListPage = () => {
 
       {/* Results count */}
       {!loading && (
-        <p className="text-sm text-text-muted mb-4">
+        <p className="text-sm text-text-muted-light dark:text-text-muted mb-4">
           {filteredLecturers.length} lecturer{filteredLecturers.length !== 1 ? 's' : ''} found
         </p>
       )}

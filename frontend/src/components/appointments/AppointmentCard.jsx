@@ -33,12 +33,12 @@ const AppointmentCard = ({
           <Avatar name={displayName} size="lg" />
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
-              <h3 className="font-semibold text-text-primary truncate">
+              <h3 className="font-semibold text-text-primary-light dark:text-text-primary truncate">
                 {displayName}
               </h3>
               <Badge status={status} />
             </div>
-            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 mt-2 text-sm text-text-secondary">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 mt-2 text-sm text-text-secondary-light dark:text-text-secondary">
               <span className="flex items-center gap-1.5">
                 <HiOutlineCalendarDays className="w-4 h-4" />
                 {formattedDate}

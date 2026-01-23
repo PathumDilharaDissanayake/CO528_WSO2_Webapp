@@ -54,15 +54,15 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-dark-bg flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-light-bg dark:bg-dark-bg flex items-center justify-center px-4 py-12 transition-colors duration-300">
       <div className="w-full max-w-md animate-in">
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="w-16 h-16 rounded-2xl bg-primary-accent flex items-center justify-center mx-auto mb-4">
             <HiOutlineCalendarDays className="w-8 h-8 text-white" />
           </div>
-          <h1 className="text-2xl font-bold text-text-primary">Welcome Back</h1>
-          <p className="text-text-secondary mt-2">Sign in to your account</p>
+          <h1 className="text-2xl font-bold text-text-primary-light dark:text-text-primary">Welcome Back</h1>
+          <p className="text-text-secondary-light dark:text-text-secondary mt-2">Sign in to your account</p>
         </div>
 
         {/* Login Form */}
@@ -104,7 +104,7 @@ const Login = () => {
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-text-secondary">
+            <p className="text-text-secondary-light dark:text-text-secondary">
               Don't have an account?{' '}
               <Link
                 to="/register"
@@ -118,7 +118,7 @@ const Login = () => {
 
         {/* Demo credentials */}
         <div className="mt-6 text-center">
-          <p className="text-xs text-text-muted">
+          <p className="text-xs text-text-muted-light dark:text-text-muted">
             Demo: Use registered credentials to sign in
           </p>
         </div>

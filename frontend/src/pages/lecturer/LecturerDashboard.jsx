@@ -95,18 +95,18 @@ const LecturerDashboard = () => {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {loading ? (
           Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="h-24 bg-dark-card rounded-2xl animate-pulse" />
+            <div key={i} className="h-24 bg-light-card dark:bg-dark-card rounded-2xl animate-pulse" />
           ))
         ) : (
           statCards.map((stat, index) => (
             <Card key={index} className="p-4">
               <div className="flex items-center gap-3">
-                <div className={`w-10 h-10 rounded-xl bg-dark-secondary flex items-center justify-center ${stat.color}`}>
+                <div className={`w-10 h-10 rounded-xl bg-light-secondary dark:bg-dark-secondary flex items-center justify-center ${stat.color}`}>
                   <stat.icon className="w-5 h-5" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-text-primary">{stat.value}</p>
-                  <p className="text-xs text-text-muted">{stat.label}</p>
+                  <p className="text-2xl font-bold text-text-primary-light dark:text-text-primary">{stat.value}</p>
+                  <p className="text-xs text-text-muted-light dark:text-text-muted">{stat.label}</p>
                 </div>
               </div>
             </Card>
@@ -117,7 +117,7 @@ const LecturerDashboard = () => {
       {/* Pending Appointments */}
       <div>
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-text-primary">Pending Appointment Requests</h2>
+          <h2 className="text-lg font-semibold text-text-primary-light dark:text-text-primary">Pending Appointment Requests</h2>
           <Button
             variant="ghost"
             size="sm"
@@ -132,8 +132,8 @@ const LecturerDashboard = () => {
           <SkeletonLoader variant="card" count={3} />
         ) : pendingAppointments.length === 0 ? (
           <Card className="text-center py-8">
-            <HiOutlineCalendarDays className="w-12 h-12 text-text-muted mx-auto mb-3" />
-            <p className="text-text-secondary">No pending appointment requests</p>
+            <HiOutlineCalendarDays className="w-12 h-12 text-text-muted-light dark:text-text-muted mx-auto mb-3" />
+            <p className="text-text-secondary-light dark:text-text-secondary">No pending appointment requests</p>
           </Card>
         ) : (
           <div className="space-y-4">
@@ -144,12 +144,12 @@ const LecturerDashboard = () => {
                     <Avatar name={appointment.studentId?.name} size="md" />
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
-                        <p className="font-medium text-text-primary truncate">
+                        <p className="font-medium text-text-primary-light dark:text-text-primary truncate">
                           {appointment.studentId?.name || 'Unknown Student'}
                         </p>
                         <Badge status="pending" />
                       </div>
-                      <p className="text-sm text-text-secondary">
+                      <p className="text-sm text-text-secondary-light dark:text-text-secondary">
                         {appointment.timeSlot?.date
                           ? dayjs(appointment.timeSlot.date).format('MMM D, YYYY')
                           : 'Date TBD'}{' '}

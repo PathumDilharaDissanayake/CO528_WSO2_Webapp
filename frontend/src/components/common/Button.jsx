@@ -13,12 +13,12 @@ const Button = ({
   const baseClasses = 'inline-flex items-center justify-center font-medium transition-all duration-200 ease-out focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed';
 
   const variantClasses = {
-    primary: 'bg-primary-accent text-white hover:bg-primary-accent-hover hover:shadow-lg hover:shadow-primary-accent/25 active:scale-[0.98] focus:ring-2 focus:ring-primary-accent/50 focus:ring-offset-2 focus:ring-offset-dark-bg',
-    secondary: 'bg-dark-card text-text-primary border border-border-subtle hover:bg-dark-secondary hover:border-text-muted active:scale-[0.98] focus:ring-2 focus:ring-border-subtle focus:ring-offset-2 focus:ring-offset-dark-bg',
-    danger: 'bg-danger text-white hover:bg-red-600 hover:shadow-lg hover:shadow-danger/25 active:scale-[0.98] focus:ring-2 focus:ring-danger/50 focus:ring-offset-2 focus:ring-offset-dark-bg',
-    success: 'bg-success text-white hover:bg-emerald-600 hover:shadow-lg hover:shadow-success/25 active:scale-[0.98] focus:ring-2 focus:ring-success/50 focus:ring-offset-2 focus:ring-offset-dark-bg',
-    ghost: 'text-text-secondary hover:bg-dark-card hover:text-text-primary active:scale-[0.98] focus:ring-2 focus:ring-border-subtle focus:ring-offset-2 focus:ring-offset-dark-bg',
-    warning: 'bg-warning text-white hover:bg-amber-600 hover:shadow-lg hover:shadow-warning/25 active:scale-[0.98] focus:ring-2 focus:ring-warning/50 focus:ring-offset-2 focus:ring-offset-dark-bg',
+    primary: 'bg-primary-accent text-white hover:bg-primary-accent-hover hover:shadow-lg hover:shadow-primary-accent/25 active:scale-[0.98] focus:ring-2 focus:ring-primary-accent/50 focus:ring-offset-2 focus:ring-offset-light-bg dark:focus:ring-offset-dark-bg',
+    secondary: 'bg-light-card dark:bg-dark-card text-text-primary-light dark:text-text-primary border border-border-subtle-light dark:border-border-subtle hover:bg-light-secondary dark:hover:bg-dark-secondary hover:border-text-muted-light dark:hover:border-text-muted active:scale-[0.98] focus:ring-2 focus:ring-border-subtle-light dark:focus:ring-border-subtle focus:ring-offset-2 focus:ring-offset-light-bg dark:focus:ring-offset-dark-bg',
+    danger: 'bg-danger text-white hover:bg-red-600 hover:shadow-lg hover:shadow-danger/25 active:scale-[0.98] focus:ring-2 focus:ring-danger/50 focus:ring-offset-2 focus:ring-offset-light-bg dark:focus:ring-offset-dark-bg',
+    success: 'bg-success text-white hover:bg-emerald-600 hover:shadow-lg hover:shadow-success/25 active:scale-[0.98] focus:ring-2 focus:ring-success/50 focus:ring-offset-2 focus:ring-offset-light-bg dark:focus:ring-offset-dark-bg',
+    ghost: 'text-text-secondary-light dark:text-text-secondary hover:bg-light-card dark:hover:bg-dark-card hover:text-text-primary-light dark:hover:text-text-primary active:scale-[0.98] focus:ring-2 focus:ring-border-subtle-light dark:focus:ring-border-subtle focus:ring-offset-2 focus:ring-offset-light-bg dark:focus:ring-offset-dark-bg',
+    warning: 'bg-warning text-white hover:bg-amber-600 hover:shadow-lg hover:shadow-warning/25 active:scale-[0.98] focus:ring-2 focus:ring-warning/50 focus:ring-offset-2 focus:ring-offset-light-bg dark:focus:ring-offset-dark-bg',
   };
 
   const sizeClasses = {

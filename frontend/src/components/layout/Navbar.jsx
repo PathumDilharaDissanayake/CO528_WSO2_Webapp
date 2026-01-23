@@ -1,6 +1,6 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context';
-import { Avatar, Button } from '../common';
+import { Avatar, Button, ThemeToggle } from '../common';
 import {
   HiOutlineHome,
   HiOutlineCalendarDays,
@@ -28,7 +28,7 @@ const Navbar = () => {
   const links = isStudent ? studentLinks : lecturerLinks;
 
   return (
-    <nav className="bg-dark-secondary/95 backdrop-blur-md border-b border-border-subtle/50 sticky top-0 z-40">
+    <nav className="bg-light-secondary/95 dark:bg-dark-secondary/95 backdrop-blur-md border-b border-border-subtle-light/50 dark:border-border-subtle/50 sticky top-0 z-40 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -39,7 +39,7 @@ const Navbar = () => {
             <div className="w-9 h-9 rounded-xl bg-primary-accent flex items-center justify-center">
               <HiOutlineCalendarDays className="w-5 h-5 text-white" />
             </div>
-            <span className="hidden sm:block text-lg font-semibold text-text-primary">
+            <span className="hidden sm:block text-lg font-semibold text-text-primary-light dark:text-text-primary">
               AppointBook
             </span>
           </div>
@@ -54,7 +54,7 @@ const Navbar = () => {
                   `flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
                     isActive
                       ? 'bg-primary-accent/10 text-primary-accent'
-                      : 'text-text-secondary hover:text-text-primary hover:bg-dark-card'
+                      : 'text-text-secondary-light dark:text-text-secondary hover:text-text-primary-light dark:hover:text-text-primary hover:bg-light-card dark:hover:bg-dark-card'
                   }`
                 }
               >
@@ -65,12 +65,15 @@ const Navbar = () => {
           </div>
 
           {/* User Menu */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
+            {/* Theme Toggle */}
+            <ThemeToggle />
+            
             <div className="hidden sm:flex items-center gap-3">
               <Avatar name={user?.name} size="sm" />
               <div className="text-right">
-                <p className="text-sm font-medium text-text-primary">{user?.name}</p>
-                <p className="text-xs text-text-muted capitalize">{user?.role}</p>
+                <p className="text-sm font-medium text-text-primary-light dark:text-text-primary">{user?.name}</p>
+                <p className="text-xs text-text-muted-light dark:text-text-muted capitalize">{user?.role}</p>
               </div>
             </div>
             <Button
@@ -94,7 +97,7 @@ const Navbar = () => {
                 `flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all duration-200 ${
                   isActive
                     ? 'bg-primary-accent/10 text-primary-accent'
-                    : 'text-text-secondary hover:text-text-primary hover:bg-dark-card'
+                    : 'text-text-secondary-light dark:text-text-secondary hover:text-text-primary-light dark:hover:text-text-primary hover:bg-light-card dark:hover:bg-dark-card'
                 }`
               }
             >

@@ -9,7 +9,7 @@ const LoadingSpinner = ({ size = 'md', className = '' }) => {
   return (
     <div className={`flex items-center justify-center ${className}`}>
       <div
-        className={`${sizeClasses[size]} border-3 border-dark-card border-t-primary-accent rounded-full animate-spin`}
+        className={`${sizeClasses[size]} border-3 border-light-card dark:border-dark-card border-t-primary-accent rounded-full animate-spin`}
         style={{ borderWidth: '3px' }}
       />
     </div>

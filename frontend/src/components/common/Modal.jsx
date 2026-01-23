@@ -53,18 +53,18 @@ const Modal = ({
 
         {/* Modal content */}
         <div
-          className={`relative w-full ${sizeClasses[size]} bg-dark-card rounded-2xl border border-border-subtle/50 shadow-glass p-6 slide-in`}
+          className={`relative w-full ${sizeClasses[size]} bg-light-card dark:bg-dark-card rounded-2xl border border-border-subtle-light/50 dark:border-border-subtle/50 shadow-glass p-6 slide-in`}
         >
           {/* Header */}
           {(title || showCloseButton) && (
             <div className="flex items-center justify-between mb-6">
               {title && (
-                <h2 className="text-xl font-semibold text-text-primary">{title}</h2>
+                <h2 className="text-xl font-semibold text-text-primary-light dark:text-text-primary">{title}</h2>
               )}
               {showCloseButton && (
                 <button
                   onClick={onClose}
-                  className="p-2 rounded-xl text-text-muted hover:text-text-primary hover:bg-dark-secondary transition-all duration-200"
+                  className="p-2 rounded-xl text-text-muted-light dark:text-text-muted hover:text-text-primary-light dark:hover:text-text-primary hover:bg-light-secondary dark:hover:bg-dark-secondary transition-all duration-200"
                 >
                   <HiXMark className="w-5 h-5" />
                 </button>

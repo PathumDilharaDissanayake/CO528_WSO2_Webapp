@@ -12,8 +12,8 @@ const LecturerCard = ({ lecturer }) => {
         <Avatar name={name} size="xl" />
         
         <div className="flex-1 min-w-0">
-          <h3 className="text-lg font-semibold text-text-primary">{name}</h3>
-          <p className="flex items-center gap-2 text-sm text-text-secondary mt-1">
+          <h3 className="text-lg font-semibold text-text-primary-light dark:text-text-primary">{name}</h3>
+          <p className="flex items-center gap-2 text-sm text-text-secondary-light dark:text-text-secondary mt-1">
             <HiOutlineEnvelope className="w-4 h-4" />
             <span className="truncate">{email}</span>
           </p>
