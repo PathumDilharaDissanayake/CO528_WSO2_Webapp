@@ -2,7 +2,6 @@
 
 A simple, well-scoped appointment booking system for **students to book appointments with lecturers**, built as a **React SPA + Node.js/Express REST API + MongoDB** project.
 
-This README defines the agreed scope: **two roles only**, limited user stories, and a small, clear set of API endpoints.
 
 ## 1) Tech Stack
 
@@ -42,7 +41,7 @@ This README defines the agreed scope: **two roles only**, limited user stories, 
 - Approve / Reject appointments (optional)
 - Mark appointment as completed (optional)
 
-## 3) Core User Stories (Limited & Clear)
+## 3) Core User Stories
 
 ### Student stories
 
@@ -195,11 +194,3 @@ Optional:
 ./scripts/smoke-test.ps1 -BaseUrl "http://localhost:5000/api" -Cleanup
 ```
 
-## 9) Why This Is a Good Academic Project
-
-- Real-world use case
-- Clean separation of concerns
-- RESTful APIs
-- Role-based access
-- SPA architecture
-- Easy to extend later (notifications, calendar sync)

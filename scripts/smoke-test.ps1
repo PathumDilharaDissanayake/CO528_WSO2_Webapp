@@ -4,7 +4,7 @@ param(
   [string]$BaseUrl = "http://localhost:5000/api",
 
   [Parameter()]
-  [string]$Password = "password123",
+  [SecureString]$Password = (ConvertTo-SecureString "password123" -AsPlainText -Force),
 
   [Parameter()]
   [string]$StudentEmail,
@@ -17,6 +17,21 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
+
+function ConvertTo-PlainText([SecureString]$SecureValue) {
+  if ($null -eq $SecureValue) {
+    return $null
+  }
+
+  $bstr = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($SecureValue)
+  try {
+    return [Runtime.InteropServices.Marshal]::PtrToStringBSTR($bstr)
+  } finally {
+    [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($bstr)
+  }
+}
+
+$PasswordPlain = ConvertTo-PlainText $Password
 
 function Write-Step([string]$Message) {
   Write-Host "\n==> $Message" -ForegroundColor Cyan
@@ -42,11 +57,11 @@ function Invoke-CurlRaw {
 
   $uri = if ($Path.StartsWith('http')) { $Path } else { "$BaseUrl$Path" }
 
-  $args = @('-sS', '-X', $Method, $uri)
+  $curlArgs = @('-sS', '-X', $Method, $uri)
 
   if ($null -ne $Headers) {
     foreach ($k in $Headers.Keys) {
-      $args += @('-H', "$k: $($Headers[$k])")
+      $curlArgs += @('-H', "$($k): $($Headers[$k])")
     }
   }
 
@@ -55,10 +70,10 @@ function Invoke-CurlRaw {
     if ($Body -isnot [string]) {
       $json = ($Body | ConvertTo-Json -Compress)
     }
-    $args += @('-H', 'Content-Type: application/json', '-d', $json)
+    $curlArgs += @('-H', 'Content-Type: application/json', '-d', $json)
   }
 
-  $output = & curl.exe @args
+  $output = & curl.exe @curlArgs
   $exit = $LASTEXITCODE
 
   if ($exit -ne 0 -and -not $IgnoreErrors) {
@@ -114,7 +129,7 @@ Write-Step "Register student"
 Invoke-CurlJson -Method 'POST' -Path '/auth/register' -Body @{
   name = 'Test Student'
   email = $StudentEmail
-  password = $Password
+  password = $PasswordPlain
   role = 'student'
 } -IgnoreErrors | Out-Null
 
@@ -122,7 +137,7 @@ Write-Step "Register lecturer"
 Invoke-CurlJson -Method 'POST' -Path '/auth/register' -Body @{
   name = 'Test Lecturer'
   email = $LecturerEmail
-  password = $Password
+  password = $PasswordPlain
   role = 'lecturer'
 } -IgnoreErrors | Out-Null
 
@@ -130,7 +145,7 @@ Invoke-CurlJson -Method 'POST' -Path '/auth/register' -Body @{
 Write-Step "Login student"
 $studentLogin = Invoke-CurlJson -Method 'POST' -Path '/auth/login' -Body @{
   email = $StudentEmail
-  password = $Password
+  password = $PasswordPlain
 }
 $studentToken = $studentLogin.token
 if ([string]::IsNullOrWhiteSpace($studentToken)) { throw "Student login did not return a token." }
@@ -138,7 +153,7 @@ if ([string]::IsNullOrWhiteSpace($studentToken)) { throw "Student login did not 
 Write-Step "Login lecturer"
 $lecturerLogin = Invoke-CurlJson -Method 'POST' -Path '/auth/login' -Body @{
   email = $LecturerEmail
-  password = $Password
+  password = $PasswordPlain
 }
 $lecturerToken = $lecturerLogin.token
 if ([string]::IsNullOrWhiteSpace($lecturerToken)) { throw "Lecturer login did not return a token." }
