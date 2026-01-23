@@ -1,7 +1,7 @@
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
-const API_BASE_URL = '/api';
+const API_BASE_URL = 'http://localhost:5000/api';
 
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
@@ -30,11 +30,11 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
     const message = error.response?.data?.error || error.message || 'An error occurred';
-    
+
     if (error.response?.status === 401) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      
+
       if (window.location.pathname !== '/login' && window.location.pathname !== '/register') {
         toast.error('Session expired. Please login again.');
         window.location.href = '/login';
@@ -46,7 +46,7 @@ axiosInstance.interceptors.response.use(
     } else if (error.response?.status >= 500) {
       toast.error('Server error. Please try again later.');
     }
-    
+
     return Promise.reject(error);
   }
 );

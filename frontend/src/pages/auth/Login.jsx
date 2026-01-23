@@ -45,13 +45,20 @@ const Login = () => {
 
     setLoading(true);
     try {
-      await login(formData);
+      // ✨ Normalize email: trim and lowercase
+      const credentials = {
+        ...formData,
+        email: formData.email.trim().toLowerCase(), // ✨ normalize email
+      };
+      await login(credentials);
     } catch (error) {
+      console.error('Login error:', error);
       // Error is handled in AuthContext
     } finally {
       setLoading(false);
     }
   };
+
 
   return (
     <div className="min-h-screen bg-light-bg dark:bg-dark-bg flex items-center justify-center px-4 py-12 transition-colors duration-300">

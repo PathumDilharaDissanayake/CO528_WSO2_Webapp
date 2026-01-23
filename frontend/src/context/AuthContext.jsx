@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
         setToken(storedToken);
         setUser(JSON.parse(storedUser));
         setIsAuthenticated(true);
-        
+
         // Verify token is still valid
         const currentUser = await authService.getCurrentUser();
         setUser(currentUser);
@@ -49,7 +49,15 @@ export const AuthProvider = ({ children }) => {
   const login = async (credentials) => {
     try {
       const response = await authService.login(credentials);
-      const { token: newToken, user: userData } = response;
+
+      // Extract token and user info directly
+      const newToken = response.token;
+      const userData = {
+        name: response.name,
+        email: response.email,
+        role: response.role,
+        _id: response._id
+      };
 
       localStorage.setItem('token', newToken);
       localStorage.setItem('user', JSON.stringify(userData));
@@ -60,12 +68,8 @@ export const AuthProvider = ({ children }) => {
 
       toast.success(`Welcome back, ${userData.name}!`);
 
-      // Redirect based on role
-      if (userData.role === 'lecturer') {
-        navigate('/lecturer/dashboard');
-      } else {
-        navigate('/student/dashboard');
-      }
+      if (userData.role === 'lecturer') navigate('/lecturer/dashboard');
+      else navigate('/student/dashboard');
 
       return response;
     } catch (error) {
@@ -74,6 +78,7 @@ export const AuthProvider = ({ children }) => {
       throw error;
     }
   };
+
 
   const register = async (userData) => {
     try {

@@ -32,33 +32,24 @@ const Register = () => {
   const validateForm = () => {
     const newErrors = {};
 
-    if (!formData.name.trim()) {
-      newErrors.name = 'Name is required';
-    } else if (formData.name.length < 2) {
+    if (!formData.name.trim()) newErrors.name = 'Name is required';
+    else if (formData.name.trim().length < 2)
       newErrors.name = 'Name must be at least 2 characters';
-    }
 
-    if (!formData.email) {
-      newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+    if (!formData.email) newErrors.email = 'Email is required';
+    else if (!/\S+@\S+\.\S+/.test(formData.email))
       newErrors.email = 'Please enter a valid email';
-    }
 
-    if (!formData.password) {
-      newErrors.password = 'Password is required';
-    } else if (formData.password.length < 6) {
+    if (!formData.password) newErrors.password = 'Password is required';
+    else if (formData.password.length < 6)
       newErrors.password = 'Password must be at least 6 characters';
-    }
 
-    if (!formData.confirmPassword) {
+    if (!formData.confirmPassword)
       newErrors.confirmPassword = 'Please confirm your password';
-    } else if (formData.password !== formData.confirmPassword) {
+    else if (formData.password !== formData.confirmPassword)
       newErrors.confirmPassword = 'Passwords do not match';
-    }
 
-    if (!formData.role) {
-      newErrors.role = 'Please select a role';
-    }
+    if (!formData.role) newErrors.role = 'Please select a role';
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -72,8 +63,17 @@ const Register = () => {
     setLoading(true);
     try {
       const { confirmPassword, ...userData } = formData;
+
+      // ✨ Normalize email: trim spaces and lowercase
+      userData.email = userData.email.trim().toLowerCase();
+
+      // ✨ Optional: trim name and role
+      userData.name = userData.name.trim();
+      userData.role = userData.role.trim();
+
       await register(userData);
     } catch (error) {
+      console.error('Registration error:', error);
       // Error is handled in AuthContext
     } finally {
       setLoading(false);
@@ -88,8 +88,12 @@ const Register = () => {
           <div className="w-16 h-16 rounded-2xl bg-primary-accent flex items-center justify-center mx-auto mb-4">
             <HiOutlineCalendarDays className="w-8 h-8 text-white" />
           </div>
-          <h1 className="text-2xl font-bold text-text-primary-light dark:text-text-primary">Create Account</h1>
-          <p className="text-text-secondary-light dark:text-text-secondary mt-2">Join our appointment booking system</p>
+          <h1 className="text-2xl font-bold text-text-primary-light dark:text-text-primary">
+            Create Account
+          </h1>
+          <p className="text-text-secondary-light dark:text-text-secondary mt-2">
+            Join our appointment booking system
+          </p>
         </div>
 
         {/* Register Form */}
