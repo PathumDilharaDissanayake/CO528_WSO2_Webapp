@@ -27,7 +27,11 @@ export const AuthProvider = ({ children }) => {
     if (storedToken && storedUser) {
       try {
         setToken(storedToken);
-        setUser(JSON.parse(storedUser));
+        const parsedUser = JSON.parse(storedUser);
+        if (parsedUser && !parsedUser.id && parsedUser._id) {
+          parsedUser.id = parsedUser._id;
+        }
+        setUser(parsedUser);
         setIsAuthenticated(true);
 
         // Verify token is still valid
@@ -53,10 +57,10 @@ export const AuthProvider = ({ children }) => {
       // Extract token and user info directly
       const newToken = response.token;
       const userData = {
+        id: response.id,
         name: response.name,
         email: response.email,
         role: response.role,
-        _id: response._id
       };
 
       localStorage.setItem('token', newToken);
@@ -73,7 +77,7 @@ export const AuthProvider = ({ children }) => {
 
       return response;
     } catch (error) {
-      const message = error.response?.data?.error || 'Login failed. Please try again.';
+      const message = error.response?.data?.message || error.response?.data?.error || 'Login failed. Please try again.';
       toast.error(message);
       throw error;
     }
@@ -87,7 +91,7 @@ export const AuthProvider = ({ children }) => {
       navigate('/login');
       return response;
     } catch (error) {
-      const message = error.response?.data?.error || 'Registration failed. Please try again.';
+      const message = error.response?.data?.message || error.response?.data?.error || 'Registration failed. Please try again.';
       toast.error(message);
       throw error;
     }

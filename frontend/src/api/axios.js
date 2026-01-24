@@ -29,7 +29,7 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
-    const message = error.response?.data?.error || error.message || 'An error occurred';
+    const message = error.response?.data?.message || error.response?.data?.error || error.message || 'An error occurred';
 
     if (error.response?.status === 401) {
       localStorage.removeItem('token');

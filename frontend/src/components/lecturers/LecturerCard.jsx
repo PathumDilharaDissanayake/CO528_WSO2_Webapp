@@ -4,7 +4,7 @@ import { HiOutlineEnvelope, HiOutlineCalendarDays } from 'react-icons/hi2';
 
 const LecturerCard = ({ lecturer }) => {
   const navigate = useNavigate();
-  const { _id, name, email } = lecturer;
+  const { id, name, email } = lecturer;
 
   return (
     <Card hover className="slide-in">
@@ -22,7 +22,7 @@ const LecturerCard = ({ lecturer }) => {
         <Button
           variant="primary"
           size="sm"
-          onClick={() => navigate(`/student/book/${_id}`)}
+          onClick={() => navigate(`/student/book/${id}`)}
           className="w-full sm:w-auto"
         >
           <HiOutlineCalendarDays className="w-4 h-4" />

@@ -20,11 +20,11 @@ const TimeSlotManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const fetchTimeSlots = useCallback(async () => {
-    if (!user?._id) return;
+    if (!user?.id) return;
     
     try {
       setLoading(true);
-      const data = await timeSlotService.getLecturerTimeSlots(user._id);
+      const data = await timeSlotService.getLecturerTimeSlots(user.id);
       // Sort by date and time
       const sortedData = data.sort((a, b) => {
         const dateCompare = new Date(a.date) - new Date(b.date);
@@ -37,7 +37,7 @@ const TimeSlotManagement = () => {
     } finally {
       setLoading(false);
     }
-  }, [user?._id]);
+  }, [user?.id]);
 
   useEffect(() => {
     fetchTimeSlots();
@@ -50,7 +50,7 @@ const TimeSlotManagement = () => {
       toast.success('Time slot created successfully');
       fetchTimeSlots();
     } catch (error) {
-      const message = error.response?.data?.error || 'Failed to create time slot';
+      const message = error.response?.data?.message || error.response?.data?.error || 'Failed to create time slot';
       toast.error(message);
       throw error;
     } finally {

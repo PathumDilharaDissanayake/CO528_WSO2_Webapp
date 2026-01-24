@@ -15,8 +15,8 @@ User.hasMany(Appointment, { foreignKey: 'lecturerId' });
 Appointment.belongsTo(User, { as: 'lecturer', foreignKey: 'lecturerId' });
 
 // Appointment-TimeSlot association
-TimeSlot.hasOne(Appointment);
-Appointment.belongsTo(TimeSlot);
+TimeSlot.hasOne(Appointment, { foreignKey: 'timeSlotId' });
+Appointment.belongsTo(TimeSlot, { as: 'timeSlot', foreignKey: 'timeSlotId' });
 
 const models = {
   User,

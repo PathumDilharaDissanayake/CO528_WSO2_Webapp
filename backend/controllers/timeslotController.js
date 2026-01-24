@@ -5,6 +5,15 @@ const createTimeSlot = async (req, res) => {
   const lecturerId = req.user.id;
 
   try {
+    const toMinutes = (time) => {
+      const [hours, minutes] = time.split(':').map(Number);
+      return hours * 60 + minutes;
+    };
+
+    if (toMinutes(startTime) >= toMinutes(endTime)) {
+      return res.status(400).json({ message: 'End time must be after start time' });
+    }
+
     const timeSlot = await TimeSlot.create({
       lecturerId,
       date,
@@ -41,6 +50,10 @@ const deleteTimeSlot = async (req, res) => {
 
     if (timeSlot.lecturerId !== lecturerId) {
       return res.status(403).json({ message: 'You are not authorized to delete this time slot' });
+    }
+
+    if (timeSlot.isBooked) {
+      return res.status(400).json({ message: 'Cannot delete a booked time slot' });
     }
 
     await timeSlot.destroy();

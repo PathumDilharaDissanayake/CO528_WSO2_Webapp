@@ -1,4 +1,4 @@
-const { Appointment, TimeSlot } = require('../models');
+const { Appointment, TimeSlot, User } = require('../models');
 
 const createAppointment = async (req, res) => {
   const { lecturerId, timeSlotId } = req.body;
@@ -13,6 +13,15 @@ const createAppointment = async (req, res) => {
 
     if (timeSlot.isBooked) {
       return res.status(400).json({ message: 'Time slot is already booked' });
+    }
+
+    if (Number(lecturerId) !== Number(timeSlot.lecturerId)) {
+      return res.status(400).json({ message: 'Time slot does not belong to this lecturer' });
+    }
+
+    const lecturer = await User.findByPk(lecturerId);
+    if (!lecturer || lecturer.role !== 'lecturer') {
+      return res.status(404).json({ message: 'Lecturer not found' });
     }
 
     const appointment = await Appointment.create({
@@ -36,7 +45,10 @@ const getStudentAppointments = async (req, res) => {
   try {
     const appointments = await Appointment.findAll({
       where: { studentId },
-      include: ['lecturer', 'timeSlot'],
+      include: [
+        { model: User, as: 'lecturer', attributes: ['id', 'name', 'email', 'role'] },
+        { model: TimeSlot, as: 'timeSlot' },
+      ],
     });
     res.json(appointments);
   } catch (error) {
@@ -50,7 +62,10 @@ const getLecturerAppointments = async (req, res) => {
   try {
     const appointments = await Appointment.findAll({
       where: { lecturerId },
-      include: ['student', 'timeSlot'],
+      include: [
+        { model: User, as: 'student', attributes: ['id', 'name', 'email', 'role'] },
+        { model: TimeSlot, as: 'timeSlot' },
+      ],
     });
     res.json(appointments);
   } catch (error) {
@@ -79,8 +94,41 @@ const updateAppointment = async (req, res) => {
       return res.status(403).json({ message: 'You are not authorized to update this appointment' });
     }
 
+    const allowedStatuses = {
+      student: ['cancelled'],
+      lecturer: ['approved', 'rejected', 'completed'],
+    };
+
+    if (!allowedStatuses[userRole]?.includes(status)) {
+      return res.status(403).json({ message: 'You are not allowed to set this status' });
+    }
+
+    if (status === 'completed' && appointment.status !== 'approved') {
+      return res.status(400).json({ message: 'Only approved appointments can be completed' });
+    }
+
+    if (status === 'approved' && appointment.status !== 'pending') {
+      return res.status(400).json({ message: 'Only pending appointments can be approved' });
+    }
+
+    if (status === 'cancelled' && !['pending', 'approved'].includes(appointment.status)) {
+      return res.status(400).json({ message: 'Only pending or approved appointments can be cancelled' });
+    }
+
+    if (status === 'rejected' && appointment.status !== 'pending') {
+      return res.status(400).json({ message: 'Only pending appointments can be rejected' });
+    }
+
     appointment.status = status;
     await appointment.save();
+
+    if (['cancelled', 'rejected'].includes(status)) {
+      const timeSlot = await TimeSlot.findByPk(appointment.timeSlotId);
+      if (timeSlot) {
+        timeSlot.isBooked = false;
+        await timeSlot.save();
+      }
+    }
 
     res.json(appointment);
   } catch (error) {

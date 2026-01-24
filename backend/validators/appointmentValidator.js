@@ -6,7 +6,9 @@ const createAppointmentSchema = Joi.object({
 });
 
 const updateAppointmentSchema = Joi.object({
-  status: Joi.string().valid('pending', 'approved', 'rejected', 'cancelled').required(),
+  status: Joi.string()
+    .valid('pending', 'approved', 'rejected', 'cancelled', 'completed')
+    .required(),
 });
 
 module.exports = {

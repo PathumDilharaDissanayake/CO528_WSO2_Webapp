@@ -2,6 +2,10 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
 const TimeSlot = sequelize.define('TimeSlot', {
+  lecturerId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
   date: {
     type: DataTypes.DATEONLY,
     allowNull: false,

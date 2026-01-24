@@ -36,7 +36,7 @@ const BookAppointment = () => {
         timeSlotService.getLecturerTimeSlots(lecturerId),
       ]);
 
-      const foundLecturer = lecturersData.find((l) => l._id === lecturerId);
+      const foundLecturer = lecturersData.find((l) => String(l.id) === String(lecturerId));
       if (!foundLecturer) {
         toast.error('Lecturer not found');
         navigate('/student/lecturers');
@@ -67,7 +67,7 @@ const BookAppointment = () => {
   }, [fetchData]);
 
   const handleSelectSlot = (slot) => {
-    setSelectedSlot(selectedSlot?._id === slot._id ? null : slot);
+    setSelectedSlot(selectedSlot?.id === slot.id ? null : slot);
   };
 
   const handleBookAppointment = async () => {
@@ -79,13 +79,13 @@ const BookAppointment = () => {
     setBooking(true);
     try {
       await appointmentService.bookAppointment({
-        lecturerId,
-        timeSlotId: selectedSlot._id,
+        lecturerId: Number(lecturerId),
+        timeSlotId: selectedSlot.id,
       });
       toast.success('Appointment booked successfully!');
       navigate('/student/appointments');
     } catch (error) {
-      const message = error.response?.data?.error || 'Failed to book appointment';
+      const message = error.response?.data?.message || error.response?.data?.error || 'Failed to book appointment';
       toast.error(message);
       // Refresh data in case slot was already booked
       fetchData();
@@ -149,7 +149,7 @@ const BookAppointment = () => {
           <TimeSlotList
             timeSlots={timeSlots}
             selectable
-            selectedId={selectedSlot?._id}
+            selectedId={selectedSlot?.id}
             onSelect={handleSelectSlot}
           />
 

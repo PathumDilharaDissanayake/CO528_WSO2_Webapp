@@ -8,11 +8,11 @@ const AppointmentCard = ({
   onStatusUpdate,
   loading = false,
 }) => {
-  const { timeSlot, status, lecturerId, studentId } = appointment;
-  
+  const { timeSlot, status, lecturer, student } = appointment;
+
   const displayName = userRole === 'student'
-    ? lecturerId?.name || 'Unknown Lecturer'
-    : studentId?.name || 'Unknown Student';
+    ? lecturer?.name || 'Unknown Lecturer'
+    : student?.name || 'Unknown Student';
 
   const formattedDate = timeSlot?.date
     ? dayjs(timeSlot.date).format('ddd, MMM D, YYYY')
@@ -59,7 +59,7 @@ const AppointmentCard = ({
                 <Button
                   variant="success"
                   size="sm"
-                  onClick={() => onStatusUpdate(appointment._id, 'approved')}
+                  onClick={() => onStatusUpdate(appointment.id, 'approved')}
                   disabled={loading}
                 >
                   Approve
@@ -67,7 +67,7 @@ const AppointmentCard = ({
                 <Button
                   variant="danger"
                   size="sm"
-                  onClick={() => onStatusUpdate(appointment._id, 'rejected')}
+                  onClick={() => onStatusUpdate(appointment.id, 'rejected')}
                   disabled={loading}
                 >
                   Reject
@@ -78,7 +78,7 @@ const AppointmentCard = ({
               <Button
                 variant="secondary"
                 size="sm"
-                onClick={() => onStatusUpdate(appointment._id, 'cancelled')}
+                onClick={() => onStatusUpdate(appointment.id, 'cancelled')}
                 disabled={loading}
               >
                 Cancel
@@ -88,7 +88,7 @@ const AppointmentCard = ({
               <Button
                 variant="primary"
                 size="sm"
-                onClick={() => onStatusUpdate(appointment._id, 'completed')}
+                onClick={() => onStatusUpdate(appointment.id, 'completed')}
                 disabled={loading}
               >
                 Mark Complete

@@ -20,7 +20,7 @@ const LecturerList = ({ lecturers, loading = false }) => {
   return (
     <div className="space-y-4">
       {lecturers.map((lecturer) => (
-        <LecturerCard key={lecturer._id} lecturer={lecturer} />
+        <LecturerCard key={lecturer.id} lecturer={lecturer} />
       ))}
     </div>
   );

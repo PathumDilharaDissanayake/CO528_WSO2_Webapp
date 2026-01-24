@@ -32,13 +32,13 @@ const TimeSlotList = ({
     <div className="space-y-3">
       {timeSlots.map((timeSlot) => (
         <TimeSlotCard
-          key={timeSlot._id}
+          key={timeSlot.id}
           timeSlot={timeSlot}
           onSelect={onSelect}
           onDelete={onDelete}
           selectable={selectable}
           deletable={deletable}
-          selected={selectedId === timeSlot._id}
+          selected={selectedId === timeSlot.id}
           loading={deleting}
         />
       ))}

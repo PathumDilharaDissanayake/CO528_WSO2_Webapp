@@ -134,13 +134,13 @@ const StudentDashboard = () => {
           ) : (
             <div className="space-y-3">
               {recentAppointments.map((appointment) => (
-                <Card key={appointment._id} hover onClick={() => navigate('/student/appointments')}>
+                <Card key={appointment.id} hover onClick={() => navigate('/student/appointments')}>
                   <div className="flex items-center gap-4">
-                    <Avatar name={appointment.lecturerId?.name} size="md" />
+                    <Avatar name={appointment.lecturer?.name} size="md" />
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
                         <p className="font-medium text-text-primary-light dark:text-text-primary truncate">
-                          {appointment.lecturerId?.name || 'Unknown'}
+                          {appointment.lecturer?.name || 'Unknown'}
                         </p>
                         <Badge status={appointment.status} />
                       </div>
@@ -183,9 +183,9 @@ const StudentDashboard = () => {
             <div className="space-y-3">
               {lecturers.map((lecturer) => (
                 <Card
-                  key={lecturer._id}
+                  key={lecturer.id}
                   hover
-                  onClick={() => navigate(`/student/book/${lecturer._id}`)}
+                  onClick={() => navigate(`/student/book/${lecturer.id}`)}
                 >
                   <div className="flex items-center gap-4">
                     <Avatar name={lecturer.name} size="md" />

@@ -11,11 +11,11 @@ const generateToken = (id, role) => {
 
 // REGISTER new user
 const register = async (req, res) => {
-  const { name, email, password, role } = req.body;
+  const { name, password, role } = req.body;
+  const email = req.body.email?.trim().toLowerCase();
 
   try {
     // Check if user exists
-    const email = req.body.email.trim().toLowerCase();
     const userExists = await User.findOne({ where: { email } });
 
     if (userExists) {
@@ -35,7 +35,7 @@ const register = async (req, res) => {
 
     // Return response with JWT
     res.status(201).json({
-      _id: user.id,
+      id: user.id,
       name: user.name,
       email: user.email,
       role: user.role,
@@ -85,25 +85,26 @@ const register = async (req, res) => {
 //   }
 // };
 const login = async (req, res) => {
-  const { email, password } = req.body;
+  const email = req.body.email?.trim().toLowerCase();
+  const { password } = req.body;
 
   try {
     // Find user by email
     const user = await User.findOne({ where: { email } });
     if (!user) {
-      return res.status(401).json({ message: 'Invalid email or password123123' });
+      return res.status(401).json({ message: 'Invalid email or password' });
     }
 
     // Compare plaintext password with hashed password
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
-      return res.status(401).json({ message: 'Invalid email or password111111111' });
+      return res.status(401).json({ message: 'Invalid email or password' });
     }
 
     // Return JWT and user info
     res.json({
-      _id: user.id,
+      id: user.id,
       name: user.name,
       email: user.email,
       role: user.role,

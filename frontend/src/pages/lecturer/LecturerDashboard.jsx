@@ -34,15 +34,19 @@ const LecturerDashboard = () => {
   const [pendingAppointments, setPendingAppointments] = useState([]);
 
   useEffect(() => {
-    fetchDashboardData();
-  }, []);
+    if (user?.id) {
+      fetchDashboardData();
+    }
+  }, [user?.id]);
 
   const fetchDashboardData = async () => {
+    if (!user?.id) return;
+
     try {
       setLoading(true);
       const [appointmentsData, slotsData] = await Promise.all([
         appointmentService.getLecturerAppointments(),
-        timeSlotService.getLecturerTimeSlots(user?._id),
+        timeSlotService.getLecturerTimeSlots(user.id),
       ]);
 
       const statsData = {
@@ -138,14 +142,14 @@ const LecturerDashboard = () => {
         ) : (
           <div className="space-y-4">
             {pendingAppointments.map((appointment) => (
-              <Card key={appointment._id}>
+              <Card key={appointment.id}>
                 <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                   <div className="flex items-center gap-4 flex-1">
-                    <Avatar name={appointment.studentId?.name} size="md" />
+                    <Avatar name={appointment.student?.name} size="md" />
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
                         <p className="font-medium text-text-primary-light dark:text-text-primary truncate">
-                          {appointment.studentId?.name || 'Unknown Student'}
+                          {appointment.student?.name || 'Unknown Student'}
                         </p>
                         <Badge status="pending" />
                       </div>
@@ -162,7 +166,7 @@ const LecturerDashboard = () => {
                     <Button
                       variant="success"
                       size="sm"
-                      onClick={() => handleQuickAction(appointment._id, 'approved')}
+                      onClick={() => handleQuickAction(appointment.id, 'approved')}
                     >
                       <HiOutlineCheckCircle className="w-4 h-4" />
                       Approve
@@ -170,7 +174,7 @@ const LecturerDashboard = () => {
                     <Button
                       variant="danger"
                       size="sm"
-                      onClick={() => handleQuickAction(appointment._id, 'rejected')}
+                      onClick={() => handleQuickAction(appointment.id, 'rejected')}
                     >
                       <HiOutlineXCircle className="w-4 h-4" />
                       Reject

@@ -49,7 +49,7 @@ const TimeSlotCard = ({
               size="icon"
               onClick={(e) => {
                 e.stopPropagation();
-                onDelete?.(timeSlot._id);
+                onDelete?.(timeSlot.id);
               }}
               disabled={loading}
               className="!p-2 text-text-muted-light dark:text-text-muted hover:text-danger"

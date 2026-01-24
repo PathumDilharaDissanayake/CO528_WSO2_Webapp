@@ -31,7 +31,7 @@ const AppointmentList = ({
     <div className="space-y-4">
       {appointments.map((appointment) => (
         <AppointmentCard
-          key={appointment._id}
+          key={appointment.id}
           appointment={appointment}
           userRole={userRole}
           onStatusUpdate={onStatusUpdate}

@@ -202,3 +202,44 @@ PUT    /api/appointments/:id       // approve / reject / cancel
 ✅ Role-based access
 ✅ SPA architecture
 ✅ Easy to extend (email notifications, calendar sync)
+
+---
+
+## Context Update (2026-01-24)
+
+Repository now contains an implemented full-stack scaffold:
+
+- Backend: `backend/` uses Express + Sequelize + Postgres. Models: `User`, `TimeSlot`, `Appointment`. JWT auth middleware is present. Routes under `/api/*`.
+- Frontend: `frontend/` is a Vite React SPA with role-based routes for students/lecturers and UI components for booking, time slot management, and appointment lists.
+
+Noted gaps to address:
+
+- Frontend uses Mongo-style `_id` fields and expects `appointment.lecturerId`/`appointment.studentId` to be objects; backend currently returns numeric `id` and uses `lecturer`/`student` associations.
+- Appointment status `completed` is supported in UI but not in backend model/validation.
+- Backend appointment list includes `include: ['lecturer', 'timeSlot']` but aliasing likely mismatched.
+- Error responses use `message` while frontend toasts read `error`.
+
+---
+
+## Context Update (2026-01-24 - Implementation Notes)
+
+Backend alignment changes:
+- Appointment model now includes status `completed` and explicit `studentId`/`lecturerId` fields.
+- TimeSlot model now includes `lecturerId` explicitly.
+- Appointment controllers now include `lecturer`/`student` associations and `timeSlot` alias in list endpoints.
+- Appointment status updates enforce role-based transitions; rejected/cancelled releases the time slot.
+- Auth controller normalizes email and returns `id` (not `_id`); login errors standardized to `Invalid email or password`.
+- Time slot creation validates end time after start time; deletion blocked for booked slots.
+- `sequelize.sync({ alter: true })` set in `backend/server.js` for schema alignment.
+
+Frontend alignment changes:
+- Frontend now uses `id` instead of `_id` across entities.
+- Appointment views now read `appointment.lecturer` / `appointment.student` instead of `lecturerId` / `studentId`.
+- Error handling reads `message` (with fallback to `error`).
+
+---
+
+## Context Update (2026-01-24 - Test Run)
+
+- Ran backend tests: `npm test` in `backend/`.
+- Result: PASS (4 tests) using Postgres DB from `.env.test`.
