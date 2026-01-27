@@ -10,6 +10,7 @@ const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const timeslotRoutes = require('./routes/timeslotRoutes');
 const appointmentRoutes = require('./routes/appointmentRoutes');
+const notificationRoutes = require('./routes/notificationRoutes');
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/timeslots', timeslotRoutes);
 app.use('/api/appointments', appointmentRoutes);
+app.use('/api/notifications', notificationRoutes);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 

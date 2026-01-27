@@ -19,9 +19,11 @@ const StudentAppointments = () => {
     { value: 'completed', label: 'Completed' },
   ];
 
-  const fetchAppointments = useCallback(async () => {
+  const fetchAppointments = useCallback(async (showLoading = true) => {
     try {
-      setLoading(true);
+      if (showLoading) {
+        setLoading(true);
+      }
       const data = await appointmentService.getStudentAppointments();
       setAppointments(data);
     } catch (error) {
@@ -33,6 +35,10 @@ const StudentAppointments = () => {
 
   useEffect(() => {
     fetchAppointments();
+    const interval = setInterval(() => {
+      fetchAppointments(false);
+    }, 10000);
+    return () => clearInterval(interval);
   }, [fetchAppointments]);
 
   useEffect(() => {

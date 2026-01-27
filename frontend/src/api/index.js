@@ -3,3 +3,4 @@ export { authService } from './authService';
 export { userService } from './userService';
 export { timeSlotService } from './timeSlotService';
 export { appointmentService } from './appointmentService';
+export { notificationService } from './notificationService';

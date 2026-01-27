@@ -19,9 +19,11 @@ const LecturerAppointments = () => {
     { value: 'completed', label: 'Completed' },
   ];
 
-  const fetchAppointments = useCallback(async () => {
+  const fetchAppointments = useCallback(async (showLoading = true) => {
     try {
-      setLoading(true);
+      if (showLoading) {
+        setLoading(true);
+      }
       const data = await appointmentService.getLecturerAppointments();
       // Sort by status priority and date
       const sorted = data.sort((a, b) => {
@@ -40,6 +42,10 @@ const LecturerAppointments = () => {
 
   useEffect(() => {
     fetchAppointments();
+    const interval = setInterval(() => {
+      fetchAppointments(false);
+    }, 10000);
+    return () => clearInterval(interval);
   }, [fetchAppointments]);
 
   useEffect(() => {

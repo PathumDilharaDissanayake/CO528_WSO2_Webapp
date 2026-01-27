@@ -1,4 +1,5 @@
 const { Appointment, TimeSlot, User } = require('../models');
+const { publishEvent } = require('../utils/eventBus');
 
 const createAppointment = async (req, res) => {
   const { lecturerId, timeSlotId } = req.body;
@@ -32,6 +33,19 @@ const createAppointment = async (req, res) => {
 
     timeSlot.isBooked = true;
     await timeSlot.save();
+
+    const eventPayload = {
+      eventName: 'AppointmentCreated',
+      entityId: appointment.id,
+      timestamp: new Date().toISOString(),
+      meta: {
+        studentId: appointment.studentId,
+        lecturerId: appointment.lecturerId,
+        timeSlotId: appointment.timeSlotId,
+      },
+    };
+
+    await publishEvent(eventPayload);
 
     res.status(201).json(appointment);
   } catch (error) {

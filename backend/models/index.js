@@ -2,6 +2,7 @@ const sequelize = require('../config/database');
 const User = require('./User');
 const TimeSlot = require('./TimeSlot');
 const Appointment = require('./Appointment');
+const Notification = require('./Notification');
 
 // User-TimeSlot association
 User.hasMany(TimeSlot, { foreignKey: 'lecturerId' });
@@ -22,6 +23,7 @@ const models = {
   User,
   TimeSlot,
   Appointment,
+  Notification,
 };
 
 const db = {

@@ -1,245 +1,127 @@
-Nice, this is a **perfect-sized SPA project** 👍 — clean, realistic, and very presentable for a CV or demo.
-
-Below is a **simple, well-scoped appointment booking system** using **React (SPA) + Node.js + database**, with **limited user stories** and **clear API endpoints**.
-
----
-
-## 1️⃣ Tech Stack (Simple & Practical)
-
-### Frontend (SPA)
-
-* **React** (Vite or CRA)
-* React Router (for routes, still SPA)
-* Axios (API calls)
-* Basic UI (Bootstrap / MUI / plain CSS)
-
-### Backend
-
-* **Node.js + Express**
-* REST API
-* JWT authentication (simple)
-
-### Database
-
-* **MongoDB** (easy schema flexibility)
-
-  * OR MySQL/PostgreSQL if you prefer relational (I’ll assume MongoDB below)
-
----
-
-## 2️⃣ User Roles
-
-Only **two roles** (keep it clean):
-
-### 👨‍🎓 Student
-
-* Register / Login
-* View available lecturers
-* View available time slots
-* Book an appointment
-* View their appointments
-* Cancel an appointment
-
-### 👨‍🏫 Lecturer
-
-* Login
-* Set available time slots
-* View booked appointments
-* Approve / Reject appointments (optional but nice)
-* Mark appointment as completed
-
----
-
-## 3️⃣ Core User Stories (Limited & Clear)
-
-### Student Stories
-
-1. As a student, I can register and log in
-2. As a student, I can view lecturers
-3. As a student, I can book an appointment with a lecturer
-4. As a student, I can view my appointments
-5. As a student, I can cancel an appointment
-
-### Lecturer Stories
-
-1. As a lecturer, I can log in
-2. As a lecturer, I can create available time slots
-3. As a lecturer, I can view appointment requests
-4. As a lecturer, I can approve or reject appointments
-
-That’s it. No feature creep 🚫
-
----
-
-## 4️⃣ Database Design (Simple)
-
-### User Collection
-
-```json
-{
-  "_id": "ObjectId",
-  "name": "John Doe",
-  "email": "john@uni.edu",
-  "password": "hashed",
-  "role": "student | lecturer"
-}
-```
-
----
-
-### TimeSlot Collection
-
-```json
-{
-  "_id": "ObjectId",
-  "lecturerId": "ObjectId",
-  "date": "2026-02-01",
-  "startTime": "10:00",
-  "endTime": "10:30",
-  "isBooked": false
-}
-```
-
----
-
-### Appointment Collection
-
-```json
-{
-  "_id": "ObjectId",
-  "studentId": "ObjectId",
-  "lecturerId": "ObjectId",
-  "timeSlotId": "ObjectId",
-  "status": "pending | approved | rejected | cancelled",
-  "createdAt": "Date"
-}
-```
-
----
-
-## 5️⃣ API Endpoints (Well Defined)
-
-### 🔐 Authentication
-
-```
-POST   /api/auth/register
-POST   /api/auth/login
-```
-
----
-
-### 👥 Users
-
-```
-GET    /api/users/lecturers        // students see lecturers
-GET    /api/users/me               // current user
-```
-
----
-
-### 🕒 Time Slots (Lecturer)
-
-```
-POST   /api/timeslots              // create availability
-GET    /api/timeslots/lecturer/:id // view lecturer slots
-DELETE /api/timeslots/:id
-```
-
----
-
-### 📅 Appointments
-
-```
-POST   /api/appointments           // student books
-GET    /api/appointments/student   // student views
-GET    /api/appointments/lecturer  // lecturer views
-PUT    /api/appointments/:id       // approve / reject / cancel
-```
-
----
-
-## 6️⃣ Frontend Pages (SPA Routes)
-
-```
-/login
-/register
-/dashboard
-/lecturers
-/lecturer/:id
-/appointments
-```
-
-### Example:
-
-* **Student Dashboard**
-
-  * List of lecturers
-  * My appointments
-
-* **Lecturer Dashboard**
-
-  * Create time slots
-  * Appointment requests
-
----
-
-## 7️⃣ Application Flow (Simple)
-
-1. User logs in
-2. JWT stored in localStorage
-3. React SPA loads dashboard based on role
-4. Axios sends token in headers
-5. Backend validates JWT
-6. CRUD operations on appointments
-
----
-
-## 8️⃣ Why This Is a Good Academic Project 💡
-
-✅ Real-world use case
-✅ Clean separation of concerns
-✅ RESTful APIs
-✅ Role-based access
-✅ SPA architecture
-✅ Easy to extend (email notifications, calendar sync)
-
----
-
-## Context Update (2026-01-24)
-
-Repository now contains an implemented full-stack scaffold:
-
-- Backend: `backend/` uses Express + Sequelize + Postgres. Models: `User`, `TimeSlot`, `Appointment`. JWT auth middleware is present. Routes under `/api/*`.
-- Frontend: `frontend/` is a Vite React SPA with role-based routes for students/lecturers and UI components for booking, time slot management, and appointment lists.
-
-Noted gaps to address:
-
-- Frontend uses Mongo-style `_id` fields and expects `appointment.lecturerId`/`appointment.studentId` to be objects; backend currently returns numeric `id` and uses `lecturer`/`student` associations.
-- Appointment status `completed` is supported in UI but not in backend model/validation.
-- Backend appointment list includes `include: ['lecturer', 'timeSlot']` but aliasing likely mismatched.
-- Error responses use `message` while frontend toasts read `error`.
-
----
-
-## Context Update (2026-01-24 - Implementation Notes)
-
-Backend alignment changes:
-- Appointment model now includes status `completed` and explicit `studentId`/`lecturerId` fields.
-- TimeSlot model now includes `lecturerId` explicitly.
-- Appointment controllers now include `lecturer`/`student` associations and `timeSlot` alias in list endpoints.
-- Appointment status updates enforce role-based transitions; rejected/cancelled releases the time slot.
-- Auth controller normalizes email and returns `id` (not `_id`); login errors standardized to `Invalid email or password`.
-- Time slot creation validates end time after start time; deletion blocked for booked slots.
-- `sequelize.sync({ alter: true })` set in `backend/server.js` for schema alignment.
-
-Frontend alignment changes:
-- Frontend now uses `id` instead of `_id` across entities.
-- Appointment views now read `appointment.lecturer` / `appointment.student` instead of `lecturerId` / `studentId`.
-- Error handling reads `message` (with fallback to `error`).
-
----
-
-## Context Update (2026-01-24 - Test Run)
-
-- Ran backend tests: `npm test` in `backend/`.
-- Result: PASS (4 tests) using Postgres DB from `.env.test`.
+# Project Context: CO528 WSO2 Webapp (Appointment Booking)
+
+Last updated: 2026-01-27
+
+## Overview
+A full-stack appointment booking system where students book time slots with lecturers.
+Frontend is a React SPA (Vite) with role-based routes. Backend is an Express REST API using Sequelize + Postgres and JWT auth.
+
+## Tech Stack
+- Frontend: React 18, Vite, React Router, Axios, Tailwind CSS, react-hot-toast, dayjs, react-icons.
+- Backend: Node.js, Express, Sequelize, Postgres, JWT, Joi validation, Swagger (swagger-jsdoc + swagger-ui-express).
+- Tests: Jest + Supertest (backend).
+
+## Repository Layout
+- backend/: Express API
+  - controllers/: auth, users, time slots, appointments
+  - routes/: /api/auth, /api/users, /api/timeslots, /api/appointments
+  - models/: User, TimeSlot, Appointment (Sequelize)
+  - middleware/: auth (JWT + role), validation, error handling
+  - validators/: Joi schemas
+  - config/: database (Sequelize), swagger
+  - tests/: Jest tests (auth)
+- frontend/: React SPA
+  - src/api/: axios instance + services
+  - src/context/: Auth + Theme providers
+  - src/pages/: auth, student, lecturer pages
+  - src/components/: UI components and feature blocks
+  - src/routes/: ProtectedRoute, PublicRoute
+  - src/styles/: Tailwind layers and shared classes
+- scripts/: smoke-test.ps1 (API smoke test)
+
+## Backend Details
+Entry points:
+- backend/index.js: Express app, routes, swagger, error handlers.
+- backend/server.js: starts server and runs sequelize.sync({ alter: true }).
+
+Database (Sequelize + Postgres):
+- User: name, email (unique), password (bcrypt), role (student|lecturer)
+- TimeSlot: lecturerId, date, startTime, endTime, isBooked
+- Appointment: studentId, lecturerId, timeSlotId, status (pending|approved|rejected|cancelled|completed)
+
+Associations (backend/models/index.js):
+- User -> TimeSlot (lecturerId)
+- User -> Appointment (studentId and lecturerId)
+- TimeSlot -> Appointment (timeSlotId)
+
+Auth:
+- JWT with payload { id, role }, expires in 30d.
+- protect middleware attaches req.user (excluding password).
+- authorize middleware enforces role.
+
+Validation:
+- Joi validators for auth, time slots, appointments.
+
+## API Summary (Base: /api)
+Auth:
+- POST /auth/register
+- POST /auth/login
+
+Users (auth required):
+- GET /users/lecturers
+- GET /users/me
+
+Time slots:
+- POST /timeslots (lecturer only)
+- GET /timeslots/lecturer/:id (auth required)
+- DELETE /timeslots/:id (lecturer only)
+
+Appointments:
+- POST /appointments (student only)
+- GET /appointments/student (student only)
+- GET /appointments/lecturer (lecturer only)
+- PUT /appointments/:id (status updates; role-limited)
+
+Status rules (appointmentController):
+- Students: only cancel
+- Lecturers: approve/reject/complete
+- Complete requires approved
+- Cancel requires pending or approved
+- Reject requires pending
+- Cancel/reject releases the time slot
+
+## Frontend Details
+Routing (frontend/src/App.jsx):
+- Public: /login, /register
+- Student: /student/dashboard, /student/lecturers, /student/book/:lecturerId, /student/appointments
+- Lecturer: /lecturer/dashboard, /lecturer/time-slots, /lecturer/appointments
+- Root redirects to /login
+
+Auth flow:
+- AuthContext stores token + user in localStorage.
+- Axios interceptor adds Bearer token and handles 401/403/404/500 toasts.
+- ThemeContext controls light/dark styling.
+
+API base URL:
+- frontend/src/api/axios.js uses http://localhost:5000/api
+
+UI:
+- Tailwind-based design system in frontend/src/styles/index.css
+- Shared components (Card, Button, Badge, Modal, etc.) under frontend/src/components
+
+## Env Vars (backend/.env)
+Use these keys (avoid committing real secrets):
+- PORT
+- JWT_SECRET
+- DB_HOST
+- DB_PORT
+- DB_NAME
+- DB_USER
+- DB_PASS
+- DATABASE_URL
+
+## Common Commands
+Backend (run inside backend/):
+- npm start
+- npm test
+
+Frontend (run inside frontend/):
+- npm run dev
+- npm run build
+- npm run lint
+- npm run preview
+
+## Known Mismatches / Notes
+- README.md still references MongoDB and a docs-only scaffold; actual implementation uses Postgres + Sequelize.
+- Swagger examples and scripts/smoke-test.ps1 still refer to _id fields; the API returns id.
+- Smoke test should be updated to use id if you plan to run it.
